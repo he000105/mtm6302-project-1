@@ -45,17 +45,18 @@ function createIdeas() {
   for (let i = 0; i < data.ideas.length; i++) {
     html.push(`  <div id="ideas">
                  <div class="card m-3">
-                    <div class="card-header">${data.ideas[i].username}</div>
+                    <div class="card-header">${data.ideas[i].username}
+                      <button class="btn btn-outline-danger btn-sm delete" data-index="${i}">x</button>
+                    </div>
                     <div class="card-body">
                      <p class="card-text">${data.ideas[i].content}</p>
-                     <button class="btn btn-primary upvote" data-index="${i}">+</button>
+                     <button class="btn btn-primary btn-sm upvote" data-index="${i}">+</button>
                      <small>${data.ideas[i].score}</small>
-                     <button class="btn btn-secondary downvote" data-index="${i}">-</button>
+                     <button class="btn btn-secondary btn-sm downvote" data-index="${i}">-</button>
                     </div>
                  </div>
               </div>`)
   }
-
   $ideas.innerHTML = html.join('')
 }
 
@@ -73,6 +74,11 @@ $ideas.addEventListener('click', function (e) {
     const index = e.target.dataset.index
     const idea = data.ideas[index]
     idea.score--
+    createIdeas()
+  }
+  if(e.target.classList.contains('delete')){
+    const index=e.target.dataset.index
+    data.ideas.splice(index, 1)
     createIdeas()
   }
 })
