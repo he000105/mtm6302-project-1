@@ -37,35 +37,42 @@ const data = {
     },
   ],
 }
+const $ideas = document.getElementById('ideas')
 
-function createIdeas(){
+function createIdeas() {
   const html = []
-//loop over the ideas pushing html
-//to empty array
-//for use when you need to know index
-//for..of use if the indes is not needed
 
-// using for loop
-for (let i = 0; i < data.ideas.length; i++) {
-  html.push(`
-  <div class="card m-3">
-    <div class="card-header">${i}:${data.ideas[i].username}</div>
-  </div>
-  <div class = "card-body">
-     <p class="card-text">${data.ideas[i].content}</p></div>
-  <div class="card-footer">
-     <button class="btn btn-secondary upvote" data-index="${i}">+</button>
-     <small>${data.ideas[i].score}</small>
-     <button class="btn btn-secondary downvote" data-index="${}">-</button>
-  </div>`)
+  for (let i = 0; i < data.ideas.length; i++) {
+    html.push(`  <div id="ideas">
+                 <div class="card m-3">
+                    <div class="card-header">${data.ideas[i].username}</div>
+                    <div class="card-body">
+                     <p class="card-text">${data.ideas[i].content}</p>
+                     <button class="btn btn-primary upvote" data-index="${i}">+</button>
+                     <small>${data.ideas[i].score}</small>
+                     <button class="btn btn-secondary downvote" data-index="${i}">-</button>
+                    </div>
+                 </div>
+              </div>`)
+  }
+
+  $ideas.innerHTML = html.join('')
 }
 
-$ideas.innerHTML = html.join('')
+createIdeas()
+//access an object using index data.ideas[]=second item
 
 $ideas.addEventListener('click', function (e) {
   if (e.target.classList.contains('upvote')) {
-    const index=e.target.dataset.index
+    const index = e.target.dataset.index
     const idea = data.ideas[index]
-    idea.score ++
+    idea.score++
+    createIdeas()
+  }
+  if (e.target.classList.contains('downvote')) {
+    const index = e.target.dataset.index
+    const idea = data.ideas[index]
+    idea.score--
+    createIdeas()
   }
 })
