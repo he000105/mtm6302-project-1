@@ -1,3 +1,7 @@
 .delete{
     float: right;
 }
+
+input{
+    height: 200px;
+}

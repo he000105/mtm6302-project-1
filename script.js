@@ -38,6 +38,10 @@ const data = {
   ],
 }
 const $ideas = document.getElementById('ideas')
+const $addIdea = document.getElementById('addIdea')
+const $newIdea = document.getElementById('newIdea')
+const $submitBtn = document.getElementById('submit')
+const $editBTn=document.getElementById('edit')
 
 function createIdeas() {
   const html = []
@@ -46,7 +50,9 @@ function createIdeas() {
     html.push(`  <div id="ideas">
                  <div class="card m-3">
                     <div class="card-header">${data.ideas[i].username}
-                      <button class="btn btn-outline-danger btn-sm delete" data-index="${i}">x</button>
+
+                    <button class="btn btn-primary btn-sm edit" data-index="${i}">Edit</button>
+                    <button class="btn btn-close btn-danger btn-sm delete" data-index="${i}"></button> 
                     </div>
                     <div class="card-body">
                      <p class="card-text">${data.ideas[i].content}</p>
@@ -61,8 +67,34 @@ function createIdeas() {
 }
 
 createIdeas()
-//access an object using index data.ideas[]=second item
 
+
+//new idea
+$addIdea.addEventListener('submit', function (e) {
+  e.preventDefault()
+  const currentUserIdeas = {
+    username: 'currentUser',
+    content: $newIdea.value,
+    score: 0,
+  }
+  $addIdea.reset()
+  data.ideas.push(currentUserIdeas)
+  createIdeas()
+})
+
+$submitBtn.addEventListener('click', function (e) {
+  e.preventDefault()
+  const currentUserIdeas = {
+    username: 'currentUser',
+    content: $newIdea.value,
+    score: 0,
+  }
+  $addIdea.reset()
+  data.ideas.push(currentUserIdeas)
+  createIdeas()
+})
+
+//changing score
 $ideas.addEventListener('click', function (e) {
   if (e.target.classList.contains('upvote')) {
     const index = e.target.dataset.index
@@ -76,8 +108,8 @@ $ideas.addEventListener('click', function (e) {
     idea.score--
     createIdeas()
   }
-  if(e.target.classList.contains('delete')){
-    const index=e.target.dataset.index
+  if (e.target.classList.contains('delete')) {
+    const index = e.target.dataset.index
     data.ideas.splice(index, 1)
     createIdeas()
   }
