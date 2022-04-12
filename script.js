@@ -41,7 +41,6 @@ const $ideas = document.getElementById('ideas')
 const $addIdea = document.getElementById('addIdea')
 const $newIdea = document.getElementById('newIdea')
 const $submitBtn = document.getElementById('submit')
-const $editBTn=document.getElementById('edit')
 
 function createIdeas() {
   const html = []
@@ -113,4 +112,24 @@ $ideas.addEventListener('click', function (e) {
     data.ideas.splice(index, 1)
     createIdeas()
   }
+})
+
+//edit Idea
+const $editBtn = document.getElementById('edit')
+
+function editIdea() {
+  const $editBox = document.getElementById('editbox')
+  const editBox = `<h4 class="m-2">Edit Idea</h4>
+    <textarea id="editText" rows="2" class="form-control"></textarea>
+    <button id="change" class="btn btn-primary">Edit Idea</button>`
+  $editBox.innerHTML = editBox
+  const $submitChange = document.getElementById('change')
+  const $editText = document.getElementById('editText')
+  $submitChange.addEventListener('click', function () {
+    data.ideas.push('currentUser', $editText.value, 0)
+  })
+}
+$editBtn.addEventListener('click', function (e) {
+  e.preventDefault()
+  editIdea()
 })
